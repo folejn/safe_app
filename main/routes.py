@@ -203,9 +203,10 @@ def update_post(post_id):
         new_content = form.content.data
         if post.encrypt:
             if not (bcrypt.check_password_hash(current_user.password, form.password.data) and form.password.data):
-                flash(f'Login unsuccessful', 'danger')
-                return render_template('full_create_post.html', title="New post",
-                           form=form, legend='Add Post')                
+                form.encrypt.data = True
+                flash(f'Incorrect password', 'danger')
+                return render_template('full_create_post.html', title="Update post",
+                           form=form, legend='Update Post', require_pass=True)                
             if(form.content.data == '***content encrypted***'):
                 form.content.data = decrypt(form.password.data, post.content, salt=post.title)
                 #form.encrypt.data=True
@@ -265,9 +266,6 @@ def user_posts(username):
     user = User.query.filter_by(username=username).first_or_404()
     
     if current_user.is_authenticated and not current_user.is_anonymous and current_user.is_active and current_user.username:
-        #posts = db.session.query(Post)\
-        #.filter(and_(or_(Post.encrypt==False, and_(Post.author==current_user, Post.encrypt==True)), Post.author==user))\
-        #.order_by(Post.date_posted.desc())
         posts = db.session.query(Post).filter(and_(or_(and_(Post.encrypt==False,Post.group_note==True, Post.author==current_user),
             and_(Post.encrypt==False,Post.group_note==True, Post.viewers.any(id=current_user.id)), 
                                                   and_(Post.encrypt==False, Post.group_note==False), 
