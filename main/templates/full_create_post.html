@@ -1,0 +1,27 @@
+{% extends "create_post.html" %}
+{% block encrypt %}
+
+{% if not form.encrypt.data and not require_pass%}
+    <div class="form-check">
+        {{ form.encrypt(class="form-check-input") }}
+        {{ form.encrypt.label(class="form-check-label") }}
+    </div> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src={{ url_for('static', filename='create_post.js') }}> </script>
+{% endif %}
+
+
+<div class="form-group">
+    {{ form.password.label(class="form-control-label") }}
+    {% if form.password.errors %}
+        {{ form.password(class="form-control form-control-lg is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ form.password(class="form-control form-control-lg") }}
+    {% endif %}
+</div> 
+{% endblock encrypt %}

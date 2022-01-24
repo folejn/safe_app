@@ -1,0 +1,15 @@
+{% extends "create_post.html" %}
+<div class="form-group">
+    {{ form.password.label(class="form-control-label") }}
+    {% if form.password.errors %}
+        {{ form.password(class="form-control form-control-lg is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ form.password(class="form-control form-control-lg") }}
+    {% endif %}
+</div>
+{% endblock encrypt %}
