@@ -31,7 +31,7 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     encrypt = db.Column(db.Boolean, default=False, nullable=False)
-    #password = db.Column(db.String(60), nullable=False)
+    iv = db.Column(db.String(16), nullable=False)
     group_note = db.Column(db.Boolean, nullable=False, default=False)
     viewers = db.relationship("User",
                     secondary=junction_table, backref='visible') 

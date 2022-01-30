@@ -12,4 +12,7 @@ def parse(text):
     for tag in list_all:
         if not tag in list_all_allowed:
             tag.replaceWith(Markup.escape(tag))
+        else:
+            tag.attrs.clear()
+        
     return Markup(soup)

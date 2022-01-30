@@ -3,25 +3,8 @@ from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from numpy import zeros
-from math import log2
 from main.models import User
-
-def countascii(s):
-    count = zeros(256)
-    for c in s:
-        count[c] +=1
-    return count
-
-def calculate_entrophy(data):
-    length = len(data)
-    count = countascii(data)
-    p = count / length
-    H = 0.0
-    for i in range(256):
-        if p[i] > 0.0:
-            H += -p[i ]* log2(p[i])
-    return H
+from main.entrophy import calculate_entrophy
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=20)])    

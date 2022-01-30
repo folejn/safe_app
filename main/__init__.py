@@ -5,7 +5,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'deadbeaf'
+app.config['SECRET_KEY'] = 'deadbeef'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db, render_as_batch=True)
