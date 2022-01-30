@@ -141,7 +141,7 @@ def new_post():
         iv = b'a'*16
         content = form.content.data
         if form.encrypt.data:
-            if not  form.password.data:     #(bcrypt.check_password_hash(current_user.password, form.password.data) and
+            if not  form.password.data:
                 flash(f'Provide valid password!', 'danger')
                 return render_template('full_create_post.html', title="New post",
                            form=form, legend='Add Post', require_pass=False)    
@@ -224,13 +224,12 @@ def update_post(post_id):
                 except ValueError:
                     flash(f'Provided password is incorrect', 'danger')
                     return redirect(url_for('post', post_id=post.id))
-                #form.encrypt.data=True
                 return render_template('full_create_post.html', title="Update post",
                            form=form, legend='Update Post', require_pass=True)
                 
             new_content = encrypt(form.password.data, new_content, salt = form.title.data, iv=post.iv)
             
-        #post.title = form.title.data
+        post.title = form.title.data
         post.content = new_content
         
         if post.group_note:

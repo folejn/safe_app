@@ -59,7 +59,7 @@ class PostForm(FlaskForm):
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')
     encrypt = BooleanField('Encrypt the post')
-    password = PasswordField('Password')
+    password = PasswordField('Password', validators=[Length(min=5, max=20)])
     
 class DecryptForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
