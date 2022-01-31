@@ -1,15 +1,16 @@
+from wsgiref.validate import validator
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 from main.models import User
 from main.entrophy import calculate_entrophy
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=20)])    
     email = StringField('Email', validators=[DataRequired(), Email()]) 
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=3, max=20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)])
     confirm_password = PasswordField('Confirm password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign up')
     
@@ -59,7 +60,8 @@ class PostForm(FlaskForm):
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')
     encrypt = BooleanField('Encrypt the post')
-    password = PasswordField('Password', validators=[Length(min=5, max=20)])
+    password = PasswordField('Password', validators=[Length(min=8, max=20),Optional()])
+    
     
 class DecryptForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
